@@ -1,12 +1,18 @@
 package client;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import util.Idioma;
+import util.Traducao;
 
 public class Client {
     public static void main(String[] args) {
         final int PORT = 4321;
         Socket socketClient;
+        Traducao pedidoTraducao, respostaTraducao;
+        ObjectOutputStream output;
 
         // conection = solicitação de conexão com o host
         try {
@@ -18,6 +24,16 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
             return;
+        }
+
+        // troca de dados
+        try {
+            pedidoTraducao = new Traducao("red", Idioma.ING_PORT);
+            output = new ObjectOutputStream(socketClient.getOutputStream());
+            output.writeObject(pedidoTraducao);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao trocar dados com o servidor");
         }
 
         // close

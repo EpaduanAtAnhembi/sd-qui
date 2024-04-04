@@ -1,14 +1,8 @@
 package util;
 
-enum Idioma {
-    PORT_ING, ING_PORT
-}
+import java.io.Serializable;
 
-enum Status {
-    SUCESSO, NAO_ENCONTRADA
-}
-
-public class Traducao {
+public class Traducao implements Serializable {
     private String palavra;
     private Idioma idioma;
     private Status status;
