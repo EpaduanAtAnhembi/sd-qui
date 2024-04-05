@@ -1,10 +1,12 @@
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import util.Status;
 import util.Traducao;
 
 public class Server {
@@ -14,7 +16,8 @@ public class Server {
         ServerSocket serverSocket;
         Socket clientSocket;
         ObjectInputStream input;
-        Traducao pedidoTraducao;
+        ObjectOutputStream output;
+        Traducao pedidoTraducao, respostaTraducao;
 
         // binding = obter uma porta do Sistema Operacional
         try {
@@ -40,8 +43,14 @@ public class Server {
         // troca de dados
         try {
             input = new ObjectInputStream(clientSocket.getInputStream());
+            output = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            System.out.println("Aguardando mensagem...");
             pedidoTraducao = (Traducao) input.readObject();
             System.out.println("Palavra: " + pedidoTraducao.getPalavra());
+
+            respostaTraducao = new Traducao("vermelho", Status.SUCESSO);
+            output.writeObject(respostaTraducao);
             
         } catch (Exception e) {
             System.out.println("Erro ao receber os dados");
