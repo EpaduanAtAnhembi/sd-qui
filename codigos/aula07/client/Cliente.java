@@ -1,5 +1,11 @@
 package client;
 
+import java.awt.event.KeyEvent;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+import util.Mensagem;
+
 /**
  *
  * @author Emerson S. Paduan <emerson@paduan.dev.br>
@@ -7,6 +13,9 @@ package client;
 
 public class Cliente extends javax.swing.JFrame {
     private static final long serialVersionUID = 1L;
+    Socket socket;
+    ObjectOutputStream out;
+    Escuta escuta;
 
     /**
      * Creates new form Cliente
@@ -152,11 +161,29 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     private void txtEntradaKeyPressed(java.awt.event.KeyEvent evt) {
-       
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER) { // se apertou a tecla  ENTER
+            Mensagem msg = new Mensagem(txtUsuario.getText(), txtEntrada.getText());
+            try {
+                out.writeObject(msg);
+                txtEntrada.setText("");
+            } catch (Exception e) {
+                System.out.println("Erro:" + e.getMessage());
+            }
+       }
     }
 
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {
-       
+       String ip = txtIP.getText();
+       int porta = Integer.parseInt(txtPorta.getText());
+
+       try {
+            socket = new Socket(ip, porta);
+            escuta = new Escuta(socket);
+            escuta.start();
+            out = new ObjectOutputStream(socket.getOutputStream());
+       } catch (Exception e) {
+            System.out.println("Erro:" + e.getMessage());
+       }
     }
 
     /**
