@@ -31,6 +31,10 @@ public class Atende extends Thread {
     public void run() {
         boolean online = true;
         System.out.println("Conectado com " + cliente.getInetAddress()+ "LP: " + cliente.getLocalPort() + "P:" + cliente.getPort());
+
+        // receber a identificação da sala e adicionar o socket cliente na sala se já houver
+        // ou então criar uma nova sala
+
         while (online) {
             Mensagem msg = (Mensagem) comunicacao.receive(); // casting
             

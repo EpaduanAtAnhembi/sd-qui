@@ -9,7 +9,8 @@ import java.util.ArrayList;
  * @author Emerson S. Paduan <emerson@paduan.dev.br>
  */
 public class Servidor {
-    protected static final ArrayList<Atende> atendentes = new ArrayList<>();
+    // protected static final ArrayList<Atende> atendentes = new ArrayList<>();
+    protected static final Salas salas = new Salas();
 
     public static void main(String[] args) {
         final int PORT = 9876;
@@ -22,7 +23,7 @@ public class Servidor {
                 System.out.println("Aguardando novo cliente...");
                 cliente = serverSocket.accept();
                 Atende atende = new Atende(cliente);
-                atendentes.add(atende);
+                // atendentes.add(atende);
                 atende.start();
             }
 

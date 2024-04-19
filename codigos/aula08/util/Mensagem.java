@@ -9,11 +9,12 @@ import java.io.Serializable;
 
 public class Mensagem implements Serializable {
 
-    private String nome, texto;
+    private String nome, texto, sala;
 
-    public Mensagem(String nome, String texto) {
+    public Mensagem(String nome, String texto, String sala) {
         this.nome = nome;
         this.texto = texto;
+        this.sala = sala;
     }
 
     public String getNome() {
@@ -24,4 +25,7 @@ public class Mensagem implements Serializable {
         return texto;
     }
 
+    public String getSala() {
+        return sala;
+    }
 }
